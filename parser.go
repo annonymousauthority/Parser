@@ -23,10 +23,12 @@ type Preview struct {
 
 func parseURL(c *gin.Context) {
 	url := c.Query("url")
+
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET")
+
 	resp, err := http.Get(url)
 	if err != nil {
 		return
