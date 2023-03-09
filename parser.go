@@ -40,7 +40,7 @@ func parseURL(c *gin.Context) {
 		fmt.Println(errr)
 	}
 
-	var previewImage, description string
+	var previewImage, description, title string
 	var extractPreviewImage func(*html.Node)
 	extractPreviewImage = func(n *html.Node) {
 		if n.Type == html.ElementNode && n.Data == "meta" {
@@ -61,6 +61,14 @@ func parseURL(c *gin.Context) {
 						}
 					}
 				}
+				if attr.Key == "name" && attr.Val == "twitter:title" {
+					for _, subAttr := range n.Attr {
+						if subAttr.Key == "content" {
+							title = subAttr.Val
+							return
+						}
+					}
+				}
 			}
 		}
 		for c := n.FirstChild; c != nil; c = c.NextSibling {
@@ -68,5 +76,5 @@ func parseURL(c *gin.Context) {
 		}
 	}
 	extractPreviewImage(doc)
-	c.IndentedJSON(http.StatusOK, gin.H{"Values": previewImage + "\n", "Descriptions": description})
+	c.IndentedJSON(http.StatusOK, gin.H{"Values": previewImage + "\n", "Descriptions": description, "Title": title})
 }
