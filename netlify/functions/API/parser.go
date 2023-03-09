@@ -61,5 +61,5 @@ func parseURL(c *gin.Context) {
 		}
 	}
 	extractPreviewImage(doc)
-	c.IndentedJSON(http.StatusOK, gin.H{"Values": previewImage + "\n", "Description": description})
+	c.IndentedJSON(http.StatusOK, gin.H{"Values": previewImage + "\n", "Descriptions": description})
 }
