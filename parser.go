@@ -11,6 +11,7 @@ import (
 
 func main() {
 	r := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
 	r.GET("/", parseURL)
 	r.Run()
 }
