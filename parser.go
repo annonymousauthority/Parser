@@ -12,7 +12,7 @@ import (
 func main() {
 	r := gin.Default()
 	r.GET("/", parseURL)
-	r.Run("localhost:8080")
+	r.Run()
 }
 
 type Preview struct {
