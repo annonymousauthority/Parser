@@ -45,7 +45,7 @@ func parseURL(c *gin.Context) {
 	extractPreviewImage = func(n *html.Node) {
 		if n.Type == html.ElementNode && n.Data == "meta" {
 			for _, attr := range n.Attr {
-				if attr.Key == "property" && attr.Val == "og:image" {
+				if attr.Key == "name" && attr.Val == "og:image" {
 					for _, subAttr := range n.Attr {
 						if subAttr.Key == "content" {
 							previewImage = subAttr.Val
