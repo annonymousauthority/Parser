@@ -53,7 +53,7 @@ func parseURL(c *gin.Context) {
 						}
 					}
 				}
-				if attr.Key == "name" && attr.Val == "description" {
+				if attr.Key == "name" && attr.Val == "og:description" {
 					for _, subAttr := range n.Attr {
 						if subAttr.Key == "content" {
 							description = subAttr.Val
