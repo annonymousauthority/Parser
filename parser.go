@@ -45,6 +45,7 @@ func parseURL(c *gin.Context) {
 	extractPreviewImage = func(n *html.Node) {
 		if n.Type == html.ElementNode && n.Data == "meta" {
 			for _, attr := range n.Attr {
+
 				if attr.Key == "name" && attr.Val == "og:image" {
 					for _, subAttr := range n.Attr {
 						if subAttr.Key == "content" {
@@ -52,7 +53,15 @@ func parseURL(c *gin.Context) {
 							return
 						}
 					}
+				} else if attr.Key == "property" && attr.Val == "og:image" {
+					for _, subAttr := range n.Attr {
+						if subAttr.Key == "content" {
+							previewImage = subAttr.Val
+							return
+						}
+					}
 				}
+
 				if attr.Key == "name" && attr.Val == "og:description" {
 					for _, subAttr := range n.Attr {
 						if subAttr.Key == "content" {
@@ -60,8 +69,23 @@ func parseURL(c *gin.Context) {
 							return
 						}
 					}
+				} else if attr.Key == "property" && attr.Val == "og:description" {
+					for _, subAttr := range n.Attr {
+						if subAttr.Key == "content" {
+							description = subAttr.Val
+							return
+						}
+					}
 				}
+
 				if attr.Key == "name" && attr.Val == "twitter:title" {
+					for _, subAttr := range n.Attr {
+						if subAttr.Key == "content" {
+							title = subAttr.Val
+							return
+						}
+					}
+				} else if attr.Key == "property" && attr.Val == "og:title" {
 					for _, subAttr := range n.Attr {
 						if subAttr.Key == "content" {
 							title = subAttr.Val
@@ -76,5 +100,5 @@ func parseURL(c *gin.Context) {
 		}
 	}
 	extractPreviewImage(doc)
-	c.IndentedJSON(http.StatusOK, gin.H{"Values": previewImage + "\n", "Descriptions": description, "Title": title})
+	c.IndentedJSON(http.StatusOK, gin.H{"Values": previewImage, "Descriptions": description, "Title": title})
 }
