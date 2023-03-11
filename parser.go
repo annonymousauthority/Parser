@@ -53,7 +53,8 @@ func parseURL(c *gin.Context) {
 							return
 						}
 					}
-				} else if attr.Key == "property" && attr.Val == "og:image" {
+				}
+				if attr.Key == "property" && attr.Val == "og:image" && previewImage == "" {
 					for _, subAttr := range n.Attr {
 						if subAttr.Key == "content" {
 							previewImage = subAttr.Val
@@ -69,7 +70,8 @@ func parseURL(c *gin.Context) {
 							return
 						}
 					}
-				} else if attr.Key == "property" && attr.Val == "og:description" {
+				}
+				if attr.Key == "property" && attr.Val == "og:description" && description == "" {
 					for _, subAttr := range n.Attr {
 						if subAttr.Key == "content" {
 							description = subAttr.Val
@@ -85,7 +87,9 @@ func parseURL(c *gin.Context) {
 							return
 						}
 					}
-				} else if attr.Key == "property" && attr.Val == "og:title" {
+				}
+
+				if attr.Key == "property" && attr.Val == "og:title" && title == "" {
 					for _, subAttr := range n.Attr {
 						if subAttr.Key == "content" {
 							title = subAttr.Val
