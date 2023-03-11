@@ -46,15 +46,7 @@ func parseURL(c *gin.Context) {
 		if n.Type == html.ElementNode && n.Data == "meta" {
 			for _, attr := range n.Attr {
 
-				if attr.Key == "name" && attr.Val == "og:image" {
-					for _, subAttr := range n.Attr {
-						if subAttr.Key == "content" {
-							previewImage = subAttr.Val
-							return
-						}
-					}
-				}
-				if attr.Key == "property" && attr.Val == "og:image" && previewImage == "" {
+				if (attr.Key == "name" || attr.Key == "property") && attr.Val == "og:image" {
 					for _, subAttr := range n.Attr {
 						if subAttr.Key == "content" {
 							previewImage = subAttr.Val
@@ -63,15 +55,7 @@ func parseURL(c *gin.Context) {
 					}
 				}
 
-				if attr.Key == "name" && attr.Val == "og:description" {
-					for _, subAttr := range n.Attr {
-						if subAttr.Key == "content" {
-							description = subAttr.Val
-							return
-						}
-					}
-				}
-				if attr.Key == "property" && attr.Val == "og:description" && description == "" {
+				if (attr.Key == "name" || attr.Key == "property") && attr.Val == "og:description" {
 					for _, subAttr := range n.Attr {
 						if subAttr.Key == "content" {
 							description = subAttr.Val
@@ -80,16 +64,7 @@ func parseURL(c *gin.Context) {
 					}
 				}
 
-				if attr.Key == "name" && attr.Val == "twitter:title" {
-					for _, subAttr := range n.Attr {
-						if subAttr.Key == "content" {
-							title = subAttr.Val
-							return
-						}
-					}
-				}
-
-				if attr.Key == "property" && attr.Val == "og:title" && title == "" {
+				if (attr.Key == "name" || attr.Key == "property") && (attr.Val == "twitter:title" || attr.Val == "og:title") {
 					for _, subAttr := range n.Attr {
 						if subAttr.Key == "content" {
 							title = subAttr.Val
